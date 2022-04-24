@@ -50,6 +50,8 @@ namespace FreeCourse.Services.PhotoStock
 
             app.UseAuthorization();
 
+            app.UseStaticFiles();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
