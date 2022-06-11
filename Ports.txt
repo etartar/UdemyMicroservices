@@ -2,4 +2,5 @@ Services
 - CatalogAPI => 5011,
 - PhotoStockAPI => 5012,
 - BasketAPI => 5014,
+- DiscountAPI => 5016,
 IdentityServer => 5001,
