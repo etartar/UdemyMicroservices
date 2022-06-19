@@ -3,4 +3,5 @@ Services
 - PhotoStockAPI => 5012,
 - BasketAPI => 5014,
 - DiscountAPI => 5016,
+- OrderAPI => 5018,
 IdentityServer => 5001,
