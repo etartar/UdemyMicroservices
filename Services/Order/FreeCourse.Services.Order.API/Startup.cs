@@ -2,6 +2,8 @@ using FreeCourse.Services.Order.Application.Handlers;
 using FreeCourse.Services.Order.Infrastructure;
 using FreeCourse.Shared.Services;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -14,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -41,6 +44,19 @@ namespace FreeCourse.Services.Order.API
             services.AddMediatR(typeof(GetOrdersByUserIdQueryHandler).Assembly);
             services.AddHttpContextAccessor();
             services.AddScoped<ISharedIdentityService, SharedIdentityService>();
+
+            var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = Configuration["IdentityServerURL"];
+                    options.Audience = "resource_order";
+                    options.RequireHttpsMetadata = false;
+                });
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
