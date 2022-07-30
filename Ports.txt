@@ -4,4 +4,5 @@ Services
 - BasketAPI => 5014,
 - DiscountAPI => 5016,
 - OrderAPI => 5018,
+- FakePaymentAPI => 5020,
 IdentityServer => 5001,
