@@ -5,6 +5,10 @@ using FreeCourse.Services.Order.Infrastructure;
 using FreeCourse.Shared.Dtos;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace FreeCourse.Services.Order.Application.Handlers
 {

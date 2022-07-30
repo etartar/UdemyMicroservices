@@ -1,4 +1,5 @@
 ﻿using FreeCourse.Services.Order.Domain.Core;
+using System.Collections.Generic;
 
 namespace FreeCourse.Services.Order.Domain.OrderAggregate
 {

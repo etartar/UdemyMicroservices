@@ -1,4 +1,7 @@
-﻿namespace FreeCourse.Services.Order.Application.Dtos
+﻿using System;
+using System.Collections.Generic;
+
+namespace FreeCourse.Services.Order.Application.Dtos
 {
     public class OrderDto
     {

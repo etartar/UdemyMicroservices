@@ -1,9 +1,16 @@
 ﻿using FreeCourse.Services.Order.Domain.Core;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FreeCourse.Services.Order.Domain.OrderAggregate
 {
     public class Order : Entity, IAggregateRoot
     {
+        public Order()
+        {
+        }
+
         public Order(string buyerId, Address address)
         {
             _orderItems = new List<OrderItem>();

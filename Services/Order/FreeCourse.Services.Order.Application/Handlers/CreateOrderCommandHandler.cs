@@ -3,6 +3,8 @@ using FreeCourse.Services.Order.Application.Dtos;
 using FreeCourse.Services.Order.Infrastructure;
 using FreeCourse.Shared.Dtos;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace FreeCourse.Services.Order.Application.Handlers
 {

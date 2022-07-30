@@ -1,4 +1,6 @@
-﻿namespace FreeCourse.Services.Order.Domain.Core
+﻿using System;
+
+namespace FreeCourse.Services.Order.Domain.Core
 {
     public abstract class Entity
     {

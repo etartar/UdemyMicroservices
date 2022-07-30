@@ -1,4 +1,8 @@
-﻿namespace FreeCourse.Services.Order.Domain.Core
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace FreeCourse.Services.Order.Domain.Core
 {
     public abstract class ValueObject
     {
