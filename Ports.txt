@@ -6,3 +6,4 @@ Services
 - OrderAPI => 5018,
 - FakePaymentAPI => 5020,
 IdentityServer => 5001,
+Gateway => 4001,
