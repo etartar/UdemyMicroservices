@@ -37,6 +37,10 @@ namespace FreeCourse.Web
                 opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
             })
                 .AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+            services.AddHttpClient<ICatalogService, CatalogService>(opt =>
+            {
+                opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
+            });
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opt =>
