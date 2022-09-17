@@ -1,7 +1,9 @@
+using FreeCourse.Shared.Services;
 using FreeCourse.Web.Handler;
 using FreeCourse.Web.Models;
 using FreeCourse.Web.Services;
 using FreeCourse.Web.Services.Interfaces;
+using IdentityModel.AspNetCore.AccessTokenManagement;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +33,7 @@ namespace FreeCourse.Web
 
             services.AddHttpContextAccessor();
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();
+            services.AddScoped<ClientCredentialTokenHandler>();
             services.AddHttpClient<IIdentityService, IdentityService>();
             services.AddHttpClient<IUserService, UserService>(opt =>
             {
@@ -40,7 +43,13 @@ namespace FreeCourse.Web
             services.AddHttpClient<ICatalogService, CatalogService>(opt =>
             {
                 opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
-            });
+            })
+                .AddHttpMessageHandler<ClientCredentialTokenHandler>();
+            services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
+
+            services.AddScoped<ISharedIdentityService, SharedIdentityService>();
+
+            services.AddAccessTokenManagement();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opt =>
