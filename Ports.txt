@@ -7,3 +7,4 @@ Services
 - FakePaymentAPI => 5020,
 IdentityServer => 5001,
 Gateway => 4001,
+Web -> 5031
