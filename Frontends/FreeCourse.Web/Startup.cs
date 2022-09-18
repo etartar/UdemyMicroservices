@@ -1,6 +1,6 @@
 using FreeCourse.Shared.Services;
 using FreeCourse.Web.Handler;
-using FreeCourse.Web.Models;
+using FreeCourse.Web.Models.Settings;
 using FreeCourse.Web.Services;
 using FreeCourse.Web.Services.Interfaces;
 using IdentityModel.AspNetCore.AccessTokenManagement;

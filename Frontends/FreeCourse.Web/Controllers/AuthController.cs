@@ -1,4 +1,4 @@
-﻿using FreeCourse.Web.Models;
+﻿using FreeCourse.Web.Models.Auth;
 using FreeCourse.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;

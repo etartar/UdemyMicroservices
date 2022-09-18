@@ -1,4 +1,4 @@
-﻿using FreeCourse.Web.Models;
+﻿using FreeCourse.Web.Models.User;
 using System.Threading.Tasks;
 
 namespace FreeCourse.Web.Services.Interfaces

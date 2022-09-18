@@ -1,4 +1,4 @@
-﻿using FreeCourse.Web.Models;
+﻿using FreeCourse.Web.Models.Settings;
 using FreeCourse.Web.Services.Interfaces;
 using IdentityModel.AspNetCore.AccessTokenManagement;
 using IdentityModel.Client;

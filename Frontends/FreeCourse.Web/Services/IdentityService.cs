@@ -1,5 +1,6 @@
 ﻿using FreeCourse.Shared.Dtos;
-using FreeCourse.Web.Models;
+using FreeCourse.Web.Models.Auth;
+using FreeCourse.Web.Models.Settings;
 using FreeCourse.Web.Services.Interfaces;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;

@@ -1,4 +1,4 @@
-﻿using FreeCourse.Web.Models;
+﻿using FreeCourse.Web.Models.User;
 using FreeCourse.Web.Services.Interfaces;
 using System.Net.Http;
 using System.Net.Http.Json;
