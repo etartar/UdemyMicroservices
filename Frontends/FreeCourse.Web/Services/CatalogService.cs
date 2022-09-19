@@ -1,4 +1,5 @@
 ﻿using FreeCourse.Shared.Dtos;
+using FreeCourse.Web.Helpers;
 using FreeCourse.Web.Models.Catalogs;
 using FreeCourse.Web.Services.Interfaces;
 using System.Collections.Generic;
@@ -12,11 +13,13 @@ namespace FreeCourse.Web.Services
     {
         private readonly HttpClient _httpClient;
         private readonly IPhotoStockService _photoStockService;
+        private readonly PhotoHelper _photoHelper;
 
-        public CatalogService(HttpClient httpClient, IPhotoStockService photoStockService)
+        public CatalogService(HttpClient httpClient, IPhotoStockService photoStockService, PhotoHelper photoHelper)
         {
             _httpClient = httpClient;
             _photoStockService = photoStockService;
+            _photoHelper = photoHelper;
         }
 
         public async Task<List<CourseViewModel>> GetAllCourseAsync()
@@ -26,6 +29,12 @@ namespace FreeCourse.Web.Services
             if (response.IsSuccessStatusCode)
             {
                 var responseSuccess = await response.Content.ReadFromJsonAsync<Response<List<CourseViewModel>>>();
+
+                responseSuccess.Data.ForEach(c =>
+                {
+                    c.Picture = _photoHelper.GetPhotoStockUrl(c.Picture);
+                });
+
                 return responseSuccess.Data;
             }
 
@@ -52,6 +61,12 @@ namespace FreeCourse.Web.Services
             if (response.IsSuccessStatusCode)
             {
                 var responseSuccess = await response.Content.ReadFromJsonAsync<Response<List<CourseViewModel>>>();
+
+                responseSuccess.Data.ForEach(c =>
+                {
+                    c.Picture = _photoHelper.GetPhotoStockUrl(c.Picture);
+                });
+
                 return responseSuccess.Data;
             }
 
@@ -65,6 +80,9 @@ namespace FreeCourse.Web.Services
             if (response.IsSuccessStatusCode)
             {
                 var responseSuccess = await response.Content.ReadFromJsonAsync<Response<CourseViewModel>>();
+
+                responseSuccess.Data.Picture = _photoHelper.GetPhotoStockUrl(responseSuccess.Data.Picture);
+
                 return responseSuccess.Data;
             }
 

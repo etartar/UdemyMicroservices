@@ -1,5 +1,6 @@
 using FreeCourse.Shared.Services;
 using FreeCourse.Web.Handler;
+using FreeCourse.Web.Helpers;
 using FreeCourse.Web.Models.Settings;
 using FreeCourse.Web.Services;
 using FreeCourse.Web.Services.Interfaces;
@@ -53,6 +54,8 @@ namespace FreeCourse.Web
             services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
 
             services.AddScoped<ISharedIdentityService, SharedIdentityService>();
+
+            services.AddSingleton<PhotoHelper>();
 
             services.AddAccessTokenManagement();
 
