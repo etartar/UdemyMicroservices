@@ -8,6 +8,7 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Kurs Ekleme</h5>
+                <div asp-validation-summary="ModelOnly"></div>
                 <form asp-controller="Courses" asp-action="Create" method="post" enctype="multipart/form-data">
                     <div class="text-danger" asp-validation-summary="ModelOnly"></div>
                     <div class="mb-3">
@@ -40,6 +41,12 @@
                         <label class="form-label" asp-for="Feature.Duration"></label>
                         <input asp-for="Feature.Duration" class="form-control" />
                         <span class="text-danger" asp-validation-for="Feature.Duration"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="PhotoFormFile"></label>
+                        <input type="file" asp-for="PhotoFormFile" class="form-control" />
+                        <span class="text-danger" asp-validation-for="PhotoFormFile"></span>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Kaydet</button>
