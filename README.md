@@ -1,1 +1,1 @@
-UdemyMicroservices
+.NET Core Microservice project
