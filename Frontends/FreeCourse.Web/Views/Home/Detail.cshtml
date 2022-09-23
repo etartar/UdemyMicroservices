@@ -9,6 +9,7 @@
             <img src="@Model.StockPictureUrl" class="card-img-top" />
             <div class="card-body">
                 <h5 class="card-title">@Model.Name</h5>
+                <p class="card-text">Kategori : @Model.Category.Name</p>
                 <p class="card-text">@Model.Description</p>
             </div>
         </div>
@@ -17,7 +18,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Fiyat : @Model.Price TL</h4>
-                <a href="#" class="btn btn-primary btn-block">Sepete Ekle</a>
+                <a asp-controller="Basket" asp-action="AddBasketItem" asp-route-courseId="@Model.Id" class="btn btn-primary btn-block">Sepete Ekle</a>
             </div>
         </div>
     </div>
