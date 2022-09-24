@@ -18,7 +18,7 @@
                         @foreach (var item in Model.BasketItems){
                             <tr>
                                 <td>@item.CourseName</td>
-                                <td>@item.GetCurrentPrice TL</td>
+                                <td>@item.GetCurrentPrice TL @(Model.HasDiscount ? $"(%{Model.DiscountRate.Value} uygulandı.)" : "")</td>
                                 <td>
                                     <a class="btn btn-danger" asp-controller="Basket" asp-action="RemoveBasketItem" asp-route-courseId="@item.CourseId">Sil</a>
                                 </td>
@@ -35,6 +35,28 @@
                             <td colspan="2">%@Model.TotalPrice</td>
                         </tr>
                     </table>
+                    <form asp-controller="Basket" asp-action="ApplyDiscount">
+                        @if (Model.HasDiscount){
+                            <div class="alert alert-success">
+                                "@Model.DiscountCode" indirim kodu uygulandı.
+                                <a asp-controller="Basket" asp-action="CancelApplyDiscount">(iptal et)</a>
+                            </div>
+                        }
+
+                        @if (TempData["discountStatus"] != null && (bool)TempData["discountStatus"] == false){
+                            <div class="text-danger">İndirim kodu geçersiz.</div>
+                        }
+
+                        <div class="input-group mb-3">
+                            <input type="text" name="DiscountApplyInput.Code" class="form-control" />
+                            <button class="btn btn-outline-secondary" type="submit">Uygula</button>
+                        </div>
+
+                        @if (TempData["discountError"] != null)
+                        {
+                            <div class="text-danger">@TempData["discountError"]</div>
+                        }
+                    </form>
                 }
                 else
                 {
