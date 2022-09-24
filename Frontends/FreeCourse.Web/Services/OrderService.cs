@@ -53,7 +53,12 @@ namespace FreeCourse.Web.Services
                 return new OrderCreatedViewModel().SetError("Sipariş oluşturulamadı.");
             }
 
-            return await response.Content.ReadFromJsonAsync<OrderCreatedViewModel>();
+            var orderResponse = await response.Content.ReadFromJsonAsync<Response<OrderCreatedViewModel>>();
+            orderResponse.Data.IsSuccessful = true;
+
+            await _basketService.Delete();
+
+            return orderResponse.Data;
         }
 
         public async Task SuspendOrder(CheckoutInfoInput input)
