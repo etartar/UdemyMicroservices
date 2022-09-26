@@ -61,9 +61,25 @@ namespace FreeCourse.Web.Services
             return orderResponse.Data;
         }
 
-        public async Task SuspendOrder(CheckoutInfoInput input)
+        public async Task<OrderSuspendViewModel> SuspendOrder(CheckoutInfoInput input)
         {
-            throw new System.NotImplementedException();
+            var basket = await _basketService.Get();
+
+            var orderCreateInput = new OrderCreateInput();
+            orderCreateInput.SetAddress(input.Province, input.District, input.Street, input.ZipCode, input.Line);
+            orderCreateInput.SetOrderItems(basket.BasketItems);
+
+            var payment = new PaymentInfoInput();
+            payment.SetSuspendOrder(input.CardName, input.CardNumber, input.Expiration, input.CVV, basket.TotalPrice, orderCreateInput);
+
+            var responsePayment = await _paymentService.ReceivePayment(payment);
+
+            if (!responsePayment)
+            {
+                return new OrderSuspendViewModel().SetError("Ödeme alınamadı.");
+            }
+
+            return new OrderSuspendViewModel { IsSuccessful = true };
         }
     }
 }
