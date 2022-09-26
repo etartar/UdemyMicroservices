@@ -79,6 +79,8 @@ namespace FreeCourse.Web.Services
                 return new OrderSuspendViewModel().SetError("Ödeme alınamadı.");
             }
 
+            await _basketService.Delete();
+
             return new OrderSuspendViewModel { IsSuccessful = true };
         }
     }

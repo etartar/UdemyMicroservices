@@ -33,6 +33,7 @@ namespace FreeCourse.Services.FakePayment.Controllers
             createOrderMessageCommand.Address.Province = payment.Order.Address.Province;
             createOrderMessageCommand.Address.District = payment.Order.Address.District;
             createOrderMessageCommand.Address.Street = payment.Order.Address.Street;
+            createOrderMessageCommand.Address.ZipCode = payment.Order.Address.ZipCode;
             createOrderMessageCommand.Address.Line = payment.Order.Address.Line;
 
             payment.Order.OrderItems.ForEach(x =>
