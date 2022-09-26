@@ -20,6 +20,6 @@ namespace FreeCourse.Web.Services.Interfaces
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task SuspendOrder(CheckoutInfoInput input);
+        Task<OrderSuspendViewModel> SuspendOrder(CheckoutInfoInput input);
     }
 }

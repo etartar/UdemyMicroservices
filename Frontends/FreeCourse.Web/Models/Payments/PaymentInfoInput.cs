@@ -1,4 +1,6 @@
-﻿namespace FreeCourse.Web.Models.Payments
+﻿using FreeCourse.Web.Models.Orders;
+
+namespace FreeCourse.Web.Models.Payments
 {
     public class PaymentInfoInput
     {
@@ -20,5 +22,17 @@
         public string Expiration { get; set; }
         public string CVV { get; set; }
         public decimal TotalPrice { get; set; }
+        public OrderCreateInput Order { get; set; }
+
+        public PaymentInfoInput SetSuspendOrder(string cardName, string cardNumber, string expiration, string cvv, decimal totalPrice, OrderCreateInput order)
+        {
+            CardName = cardName;
+            CardNumber = cardNumber;
+            Expiration = expiration;
+            CVV = cvv;
+            TotalPrice = totalPrice;
+            Order = order;
+            return this;
+        }
     }
 }
