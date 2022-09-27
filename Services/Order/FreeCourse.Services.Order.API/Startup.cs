@@ -41,6 +41,7 @@ namespace FreeCourse.Services.Order.API
             services.AddMassTransit(x =>
             {
                 x.AddConsumer<CreateOrderMessageCommandConsumer>();
+                x.AddConsumer<CourseNameChangedEventConsumer>();
 
                 // Default Port : 5672
                 x.UsingRabbitMq((context, cfg) =>
@@ -51,9 +52,14 @@ namespace FreeCourse.Services.Order.API
                         host.Password("guest");
                     });
 
-                    cfg.ReceiveEndpoint("queue:create-order-service", e =>
+                    cfg.ReceiveEndpoint("create-order-service", e =>
                     {
                         e.ConfigureConsumer<CreateOrderMessageCommandConsumer>(context);
+                    });
+
+                    cfg.ReceiveEndpoint("course-name-changed-event-order-service", e =>
+                    {
+                        e.ConfigureConsumer<CourseNameChangedEventConsumer>(context);
                     });
                 });
             });
