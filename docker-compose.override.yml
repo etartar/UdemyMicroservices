@@ -1,0 +1,155 @@
+version: "3.8"
+services: 
+  rabbitmq:
+    container_name: rabbitmq-management
+    restart: always
+    ports: 
+      - "5672:5672"
+      - "15672:15672"
+  basketdb:
+    container_name: basketdb
+    restart: always
+    ports: 
+      - "6379:6379"
+  identitydb:
+    container_name: identitydb
+    restart: always
+    ports: 
+      - "1433:1433"
+    volumes:
+      - identitydb_volume:/var/opt/mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=29041993
+  catalogdb:
+    container_name: catalogdb
+    restart: always
+    ports: 
+      - "27017:27017"
+    volumes:
+      - catalogdb_volume:/data/db
+  discountdb:
+    container_name: discountdb
+    restart: always
+    ports: 
+      - "5442:5442"
+    volumes:
+      - discountdb_volume:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Pasword12*
+      - POSTGRES_DB=discountdb
+  orderdb:
+    container_name: orderdb
+    restart: always
+    ports: 
+      - "1444:1444"
+    volumes:
+      - orderdb_volume:/var/opt/mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=29041993
+  identityserver.api:
+    container_name: identityserver.api
+    restart: on-failure
+    environment: 
+     - ASPNETCORE_ENVIRONMENT=Development
+     - "ConnectionStrings::DefaultConnection=Server=identitydb,1433;Database=IdentityDb;User=sa;Password=29041993"
+    ports:
+      - "5001:80"
+    depends_on:
+      - identitydb
+  catalog.api:
+    container_name: catalog.api
+    restart: always
+    environment: 
+     - ASPNETCORE_ENVIRONMENT=Development
+     - RabbitMQUrl=rabbitmq
+     - IdentityServerURL=https://identityserver.api
+     - DatabaseSettings::ConnectionString=mongodb://ETAdmin:et***1357911@catalogdb:27017
+    ports:
+      - "5011:80"
+    depends_on:
+      - catalogdb
+  discount.api:
+    container_name: discount.api
+    restart: always
+    environment: 
+     - ASPNETCORE_ENVIRONMENT=Development
+     - IdentityServerURL=https://identityserver.api
+     - "ConnectionStrings::PostgreSQL=User Id=postgres; Password=Password12*; Server=discountdb; Port=5442; Database=discountdb; Integrated Security=true; Pooling=true"
+    ports:
+      - "5016:80"
+    depends_on:
+      - discountdb
+  order.api:
+    container_name: order.api
+    restart: always
+    environment: 
+     - ASPNETCORE_ENVIRONMENT=Development
+     - IdentityServerURL=https://identityserver.api
+     - RabbitMQUrl=rabbitmq
+     - "ConnectionStrings::DefaultConnection=Server=orderdb,1444;Database=OrderDb;User=sa;Password=29041993"
+    ports:
+      - "5018:80"
+    depends_on:
+      - orderdb
+  basket.api:
+    container_name: basket.api
+    restart: always
+    environment: 
+     - ASPNETCORE_ENVIRONMENT=Development
+     - IdentityServerURL=https://identityserver.api
+     - RedisSettings::Host=basketdb
+     - RedisSettings::Port=6379
+    ports:
+      - "5014:80"
+    depends_on:
+      - basketdb
+  photostock.api:
+    container_name: photostock.api
+    restart: always
+    environment: 
+     - ASPNETCORE_ENVIRONMENT=Development
+     - IdentityServerURL=https://identityserver.api
+    ports:
+      - "5012:80"
+    volumes:
+      - type: bind
+        source: C:\Users\Emir TARTAR\Desktop\PhotoStock
+        target: /app/wwwroot/photos
+  fakepayment.api:
+    container_name: fakepayment.api
+    restart: always
+    environment: 
+     - ASPNETCORE_ENVIRONMENT=Development
+     - IdentityServerURL=https://identityserver.api
+     - RabbitMQUrl=rabbitmq
+    ports:
+      - "5020:80"
+  gateway.api:
+    container_name: gateway.api
+    restart: always
+    environment: 
+     - ASPNETCORE_ENVIRONMENT=Production
+     - IdentityServerURL=https://identityserver.api
+    ports:
+      - "4001:80"
+  frontend.web:
+    container_name: frontend.web
+    restart: always
+    environment: 
+     - ASPNETCORE_ENVIRONMENT=Development
+     - ServiceApiSettings::IdentityBaseUri=https://identityserver.api
+     - ServiceApiSettings::GatewayBaseUri=https://gateway.api
+    ports:
+      - "5031:80"
+    depends_on:
+      - gateway.api
+      - identityserver.api
+      - catalog.api
+      - basket.api
+      - discount.api
+      - order.api
+      - photostock.api
+      - fakepayment.api
